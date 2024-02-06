@@ -34,19 +34,23 @@ use Google\Shopping\Merchant\Reports\V1beta\SearchRequest;
  * fewer rows than specified by `page_size`. Rely on `next_page_token` to
  * determine if there are more rows to be requested.
  *
- * This sample has been automatically generated and should be regarded as a code
- * template only. It will require modifications to work:
- *  - It may require correct/in-range values for request initialization.
- *  - It may require specifying regional endpoints when creating the service client,
- *    please see the apiEndpoint client configuration option for more details.
+ * @param string $parent Id of the account making the call. Must be a standalone account
+ *                       or an MCA subaccount. Format: accounts/{account}
+ * @param string $query  Query that defines a report to be retrieved.
+ *
+ *                       For details on how to construct your query, see the Query Language
+ *                       guide. For the full list of available tables and fields, see the Available
+ *                       fields.
  */
-function search_sample(): void
+function search_sample(string $parent, string $query): void
 {
     // Create a client.
     $reportServiceClient = new ReportServiceClient();
 
     // Prepare the request message.
-    $request = new SearchRequest();
+    $request = (new SearchRequest())
+        ->setParent($parent)
+        ->setQuery($query);
 
     // Call the API and handle any network failures.
     try {
@@ -60,5 +64,22 @@ function search_sample(): void
     } catch (ApiException $ex) {
         printf('Call failed with message: %s' . PHP_EOL, $ex->getMessage());
     }
+}
+
+/**
+ * Helper to execute the sample.
+ *
+ * This sample has been automatically generated and should be regarded as a code
+ * template only. It will require modifications to work:
+ *  - It may require correct/in-range values for request initialization.
+ *  - It may require specifying regional endpoints when creating the service client,
+ *    please see the apiEndpoint client configuration option for more details.
+ */
+function callSample(): void
+{
+    $parent = '[PARENT]';
+    $query = '[QUERY]';
+
+    search_sample($parent, $query);
 }
 // [END merchantapi_v1beta_generated_ReportService_Search_sync]
